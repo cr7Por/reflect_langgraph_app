@@ -9,10 +9,11 @@ from langchain_core.messages import BaseMessageChunk
 from typing import cast
 
 class Graph_State(TypedDict):
-    messages: Annotated[list[AnyMessage], add_messages]
-    generate_prompt: str
+    #messages: Annotated[list[AnyMessage], add_messages]
+    generation_prompt: str
     reflection_prompt: str
     user_prompt: str
     user_advice: str
     content: str
+    reflecton_advice: str
     reflect_count: int

@@ -1,15 +1,18 @@
+from operator import ge
 from flask import Flask, render_template, request, jsonify, send_file
 import json
 import os
 import datetime
 from state import Graph_State
-from graph import graph
+from graph import generation_graph_flow_v1
+from utils import convert_to_string_list
+from logger import logger
 
 app = Flask(__name__)
 
 # 默认提示词模板
 DEFAULT_PROMPTS = {
-    "generate_prompt": "请根据以下内容生成详细的回答：\n\n{user_input}",
+    "generation_prompt": "请根据以下内容生成详细的回答：\n\n{user_input}",
     "reflection_prompt": "请对以下内容进行反思和评估：\n\n{generated_content}",
     "user_prompt": "请输入您的问题或需求："
 }
@@ -37,12 +40,18 @@ def load_file():
         
         if file and file.filename.endswith('.json'):
             data = json.load(file)
-            
-            # 提取提示词，如果不存在则使用默认值
+
+            generate_prompt = data.get("generation_prompt", DEFAULT_PROMPTS["generation_prompt"])
+            full_generate_prompt = "\n".join(generate_prompt)
+            reflection_prompt = data.get("reflection_prompt", DEFAULT_PROMPTS["reflection_prompt"])
+            full_reflection_prompt = "\n".join(reflection_prompt)
+            user_prompt = data.get("user_prompt", DEFAULT_PROMPTS["user_prompt"])
+            full_user_prompt = "\n".join(user_prompt)
+                        
             prompts = {
-                "generate_prompt": data.get("generate_prompt", DEFAULT_PROMPTS["generate_prompt"]),
-                "reflection_prompt": data.get("reflection_prompt", DEFAULT_PROMPTS["reflection_prompt"]),
-                "user_prompt": data.get("user_prompt", DEFAULT_PROMPTS["user_prompt"])
+                "generation_prompt": full_generate_prompt,
+                "reflection_prompt": full_reflection_prompt,
+                "user_prompt": full_user_prompt
             }
             
             return jsonify(prompts)
@@ -57,15 +66,22 @@ def save_prompts():
     """保存提示词到JSON文件"""
     try:
         data = request.json
+
+        # 转换成长字符串列表
+        # 这里将generate_prompt/reflection_prompt/user_prompt都从data中获取
+        generate_prompt = data.get("generation_prompt", "")
+        reflection_prompt = data.get("reflection_prompt", "")
+        user_prompt = data.get("user_prompt", "")
+        generate_string_list = convert_to_string_list(generate_prompt)
+        reflection_string_list = convert_to_string_list(reflection_prompt)
+        user_string_list = convert_to_string_list(user_prompt)
+
         prompts_data = {
-            "generate_prompt": data.get("generate_prompt", ""),
-            "reflection_prompt": data.get("reflection_prompt", ""),
-            "user_prompt": data.get("user_prompt", "")
+            "generation_prompt": generate_string_list,
+            "reflection_prompt": reflection_string_list,
+            "user_prompt": user_string_list
         }
-        
-        # 创建prompts目录（如果不存在）
-        os.makedirs("prompts", exist_ok=True)
-        
+                
         # 生成文件名（包含时间戳）
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"prompts/prompts_{timestamp}.json"
@@ -83,24 +99,44 @@ def generate_content():
     """生成内容（模拟LangGraph的生成和反思过程）"""
     try:
         data = request.json
-        generate_prompt = data.get("generate_prompt", "")
+        generation_prompt = data.get("generation_prompt", "")
         reflection_prompt = data.get("reflection_prompt", "")
         user_prompt = data.get("user_prompt", "")
         
+        logger.info(f"Generate content request - user_prompt: {user_prompt[:100]}...")
+        logger.info(f"Generation prompt length: {len(generation_prompt)}")
+        logger.info(f"Reflection prompt length: {len(reflection_prompt)}")
+        
         if not user_prompt.strip():
+            logger.warning("Empty user prompt provided")
             return jsonify({"error": "请输入用户提示词"})
         
-        # 模拟生成节点
-        generated_text = f"基于生成提示词：{generate_prompt}\n\n用户输入：{user_prompt}\n\n生成的内容：\n这是一个模拟的生成内容。在实际应用中，这里会调用LangGraph的生成节点来处理用户输入并生成相应的内容。"
+        # 构造初始 state
+        state = {
+            "generation_prompt": generation_prompt,
+            "reflection_prompt": reflection_prompt,
+            "user_prompt": user_prompt,
+            "user_advice": "",
+            "content": "",
+            "reflecton_advice": "",
+            "reflect_count": 0
+        }
+
+        logger.info("Starting graph execution...")
+        # 调用异步 graph
+        import asyncio
+        result_state = asyncio.run(generation_graph_flow_v1.ainvoke(state))
+        generated_text = result_state.get("content", "")
         
-        # 模拟反思节点
-        reflection_text = f"基于反思提示词：{reflection_prompt}\n\n对生成内容的反思：\n生成的内容质量良好，逻辑清晰，但可能需要进一步完善细节。"
+        logger.info(f"Graph execution completed. Generated text length: {len(generated_text)}")
+        logger.info(f"Final reflect_count: {result_state.get('reflect_count', 0)}")
         
-        final_content = f"{generated_text}\n\n---反思结果---\n{reflection_text}"
+        final_content = f"{generated_text}\n\n---反思结果---\n"#{}"
         
         return jsonify({"content": final_content})
         
     except Exception as e:
+        logger.error(f"Generate content failed: {str(e)}", exc_info=True)
         return jsonify({"error": f"生成内容失败: {str(e)}"}), 500
 
 @app.route('/save_feedback', methods=['POST'])
@@ -119,6 +155,8 @@ def save_feedback():
             
     except Exception as e:
         return jsonify({"error": f"保存反馈失败: {str(e)}"}), 500
+
+
 
 if __name__ == '__main__':
     # 创建templates目录

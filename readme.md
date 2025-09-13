@@ -28,12 +28,31 @@
 pip install -r requirements.txt
 ```
 
-2. 运行程序：
+2. 设置环境变量：
+```bash
+# 复制环境变量示例文件
+cp env.example .env
+
+# 编辑 .env 文件，填入你的 API 密钥
+# 至少需要设置 AZURE_OPENAI_API_KEY
+```
+
+3. 运行程序：
 ```bash
 python app.py
 ```
 
-3. 在浏览器中访问：http://localhost:5000
+4. 在浏览器中访问：http://localhost:5000
+
+## 环境变量配置
+
+项目需要以下环境变量（参考 `env.example` 文件）：
+
+- `AZURE_OPENAI_API_KEY`: Azure OpenAI API 密钥（必需）
+- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI 端点
+- `OPENAI_API_VERSION`: OpenAI API 版本
+- `GEMINI_API_KEY`: Gemini API 密钥（可选）
+- `AWS_MODEL`, `AWS_REGION`, `AWS_KEYID`, `AWS_KEY`: AWS 配置（可选）
 
 ## 使用说明
 
