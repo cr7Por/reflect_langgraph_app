@@ -73,10 +73,10 @@ python app.py
 提示词JSON文件应包含以下字段：
 ```json
 {
-  "generate_prompt": "生成节点的提示词模板",
+  "generation_prompt": "生成节点的提示词模板",
   "reflection_prompt": "反思节点的提示词模板", 
   "user_prompt": "用户提示词模板"
 }
 ```
 
-示例文件：`example_prompts.json`
+示例文件：`mtv_script_prompt.json`
