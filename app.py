@@ -121,7 +121,7 @@ def generate_content():
             "user_advice": data.get("feedback", ""),
             "content": content,
             "reflecton_advice": "",
-            "reflect_count": ""
+            "reflect_count": 0
         }
 
         logger.info("Starting graph execution...")
