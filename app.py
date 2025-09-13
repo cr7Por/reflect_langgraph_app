@@ -112,14 +112,16 @@ def generate_content():
             return jsonify({"error": "请输入用户提示词"})
         
         # 构造初始 state
+        content = data.get("content", "")
+        logger.info(f"last run generation content: {content}")
         state = {
             "generation_prompt": generation_prompt,
             "reflection_prompt": reflection_prompt,
             "user_prompt": user_prompt,
-            "user_advice": "",
-            "content": "",
+            "user_advice": data.get("feedback", ""),
+            "content": content,
             "reflecton_advice": "",
-            "reflect_count": 0
+            "reflect_count": ""
         }
 
         logger.info("Starting graph execution...")
@@ -139,22 +141,6 @@ def generate_content():
         logger.error(f"Generate content failed: {str(e)}", exc_info=True)
         return jsonify({"error": f"生成内容失败: {str(e)}"}), 500
 
-@app.route('/save_feedback', methods=['POST'])
-def save_feedback():
-    """保存用户反馈"""
-    try:
-        data = request.json
-        feedback = data.get("feedback", "")
-        
-        if feedback.strip():
-            with open("feedback.txt", "a", encoding="utf-8") as f:
-                f.write(f"反馈：{feedback}\n")
-            return jsonify({"message": "反馈已保存"})
-        else:
-            return jsonify({"error": "请输入反馈内容"})
-            
-    except Exception as e:
-        return jsonify({"error": f"保存反馈失败: {str(e)}"}), 500
 
 
 

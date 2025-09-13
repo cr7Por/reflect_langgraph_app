@@ -106,7 +106,7 @@
         <!-- 头部 -->
         <div class="header">
             <h1><i class="fas fa-robot"></i> LangGraph 提示词管理工具</h1>
-            <p class="mb-0">左侧：提示词管理 | 中间：内容生成 | 右侧：反馈收集</p>
+            <p class="mb-0">左侧：提示词管理 | 中间：内容生成 | 右侧：修改意见</p>
         </div>
 
         <div class="row">
@@ -178,7 +178,7 @@
                 </div>
             </div>
 
-            <!-- 右侧板块 - 反馈收集 -->
+            <!-- 右侧板块 - 修改意见 -->
             <div class="col-md-4">
                 <div class="panel">
                     <h3><i class="fas fa-comments"></i> 修改意见</h3>
@@ -189,16 +189,14 @@
                         <textarea class="form-control textarea-large" id="feedbackInput" rows="8" 
                                   placeholder="请在此输入对生成内容的修改建议..."></textarea>
                     </div>
-
-                    <!-- 保存反馈按钮 -->
-                    <button type="button" class="btn btn-secondary btn-custom w-100" onclick="saveFeedback()">
-                        <i class="fas fa-save"></i> 保存反馈
-                    </button>
                     
-                    <!-- 状态消息 -->
-                    <div id="feedbackStatus" class="status-message"></div>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        修改意见将在下次生成内容时使用，无需单独保存。可以添加到用户提示词一起保存。
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -268,7 +266,9 @@
             const data = {
                 generation_prompt: document.getElementById('generatePrompt').value,
                 reflection_prompt: document.getElementById('reflectionPrompt').value,
-                user_prompt: document.getElementById('userPrompt').value
+                user_prompt: document.getElementById('userPrompt').value,
+                feedback: document.getElementById('feedbackInput').value,
+                content: document.getElementById('generatedContent').value
             };
             
             fetch('/generate_content', {
@@ -292,30 +292,6 @@
             });
         }
 
-        // 保存反馈
-        function saveFeedback() {
-            const feedback = document.getElementById('feedbackInput').value;
-            
-            fetch('/save_feedback', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({feedback: feedback})
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    showStatus('feedbackStatus', data.error, 'error');
-                } else {
-                    showStatus('feedbackStatus', data.message, 'success');
-                    document.getElementById('feedbackInput').value = '';
-                }
-            })
-            .catch(error => {
-                showStatus('feedbackStatus', '保存失败: ' + error, 'error');
-            });
-        }
 
         // 显示状态消息
         function showStatus(elementId, message, type) {

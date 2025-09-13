@@ -101,11 +101,11 @@ def aws_claude():
 
 def init_generation_model():
     # 使用通义千问模型
-    llm = azure_openai()
+    #llm = azure_openai()
     #llm = ollama_local_qwen3()
     #llm = ollama_local_llama4("llama4:128x17b")
     #llm = ollama_local_deepseek_tool()
-    #llm = ollama_local('mistral-small3.2:24b')
+    llm = ollama_local('gpt-oss:20b')
     #llm = openai_gpt()
     #llm = aws_claude()
     #llm = gemini_openai()
@@ -115,11 +115,11 @@ def init_generation_model():
 
 def init_reflection_model():
     # 使用通义千问模型
-    llm = azure_openai()
+    #llm = azure_openai()
     #llm = ollama_local_qwen3()
     #llm = ollama_local_llama4("llama4:128x17b")
     #llm = ollama_local_deepseek_tool()
-    #llm = ollama_local('mistral-small3.2:24b')
+    llm = ollama_local('gpt-oss:20b')
     #llm = openai_gpt()
     #llm = aws_claude()
     #llm = gemini_openai()
