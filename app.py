@@ -66,6 +66,7 @@ def save_prompts():
     """保存提示词到JSON文件"""
     try:
         data = request.json
+        language = data.get("language", "zh")
 
         # 转换成长字符串列表
         # 这里将generate_prompt/reflection_prompt/user_prompt都从data中获取
@@ -89,10 +90,18 @@ def save_prompts():
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(prompts_data, f, ensure_ascii=False, indent=2)
         
-        return jsonify({"message": f"提示词已保存到: {filename}"})
+        messages = {
+            "zh": f"提示词已保存到: {filename}",
+            "en": f"Prompts saved to: {filename}"
+        }
+        return jsonify({"message": messages.get(language, messages["zh"])})
         
     except Exception as e:
-        return jsonify({"error": f"保存失败: {str(e)}"}), 500
+        error_messages = {
+            "zh": f"保存失败: {str(e)}",
+            "en": f"Save failed: {str(e)}"
+        }
+        return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 500
 
 @app.route('/generate_content', methods=['POST'])
 def generate_content():
@@ -114,13 +123,14 @@ def generate_content():
         # 构造初始 state
         content = data.get("content", "")
         logger.info(f"last run generation content: {content}")
+        reflect_advice = data.get("reflect_advice", "")
         state = {
             "generation_prompt": generation_prompt,
             "reflection_prompt": reflection_prompt,
             "user_prompt": user_prompt,
             "user_advice": data.get("feedback", ""),
             "content": content,
-            "reflecton_advice": "",
+            "reflecton_advice": reflect_advice,
             "reflect_count": 0
         }
 
@@ -129,19 +139,195 @@ def generate_content():
         import asyncio
         result_state = asyncio.run(generation_graph_flow_v1.ainvoke(state))
         generated_text = result_state.get("content", "")
+        reflect_advice = result_state.get("reflecton_advice", "")
         
         logger.info(f"Graph execution completed. Generated text length: {len(generated_text)}")
         logger.info(f"Final reflect_count: {result_state.get('reflect_count', 0)}")
         
-        final_content = f"{generated_text}\n\n---反思结果---\n"#{}"
+        final_content = f"{generated_text}\n\n---反思结果---#{reflect_advice}"
         
-        return jsonify({"content": final_content})
+        return jsonify({"content": final_content, "reflect_advice": reflect_advice})
         
     except Exception as e:
         logger.error(f"Generate content failed: {str(e)}", exc_info=True)
         return jsonify({"error": f"生成内容失败: {str(e)}"}), 500
 
+@app.route('/save_content', methods=['POST'])
+def save_content():
+    """保存生成的内容到文件"""
+    try:
+        data = request.json
+        content = data.get("content", "")
+        language = data.get("language", "zh")
+        
+        if content.strip():
+            # 生成文件名（包含时间戳）
+            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"generated_content_{timestamp}.txt"
+            
+            with open(filename, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            messages = {
+                "zh": f"内容已保存到: {filename}",
+                "en": f"Content saved to: {filename}"
+            }
+            return jsonify({"message": messages.get(language, messages["zh"])})
+        else:
+            error_messages = {
+                "zh": "没有内容可保存",
+                "en": "No content to save"
+            }
+            return jsonify({"error": error_messages.get(language, error_messages["zh"])})
+            
+    except Exception as e:
+        error_messages = {
+            "zh": f"保存内容失败: {str(e)}",
+            "en": f"Save content failed: {str(e)}"
+        }
+        return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 500
 
+@app.route('/load_content', methods=['POST'])
+def load_content():
+    """从文件加载内容"""
+    try:
+        language = request.form.get("language", "zh")
+        
+        if 'file' not in request.files:
+            error_messages = {
+                "zh": "没有选择文件",
+                "en": "No file selected"
+            }
+            return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 400
+        
+        file = request.files['file']
+        if file.filename == '':
+            error_messages = {
+                "zh": "没有选择文件",
+                "en": "No file selected"
+            }
+            return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 400
+        
+        if file and file.filename.endswith('.txt'):
+            content = file.read().decode('utf-8')
+            return jsonify({"content": content})
+        else:
+            error_messages = {
+                "zh": "请选择TXT文件",
+                "en": "Please select a TXT file"
+            }
+            return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 400
+            
+    except Exception as e:
+        error_messages = {
+            "zh": f"加载内容失败: {str(e)}",
+            "en": f"Load content failed: {str(e)}"
+        }
+        return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 500
+
+@app.route('/save_advice', methods=['POST'])
+def save_advice():
+    """保存Graph反思建议和用户建议"""
+    try:
+        data = request.json
+        reflect_advice = data.get("reflect_advice", "")
+        user_advice = data.get("user_advice", "")
+        language = data.get("language", "zh")
+        
+        if not reflect_advice.strip() and not user_advice.strip():
+            error_messages = {
+                "zh": "没有建议可保存",
+                "en": "No advice to save"
+            }
+            return jsonify({"error": error_messages.get(language, error_messages["zh"])})
+        
+        # 生成文件名（包含时间戳）
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"advice_{timestamp}.txt"
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            if reflect_advice.strip():
+                f.write("=== Graph反思建议 ===\n")
+                f.write(reflect_advice)
+                f.write("\n\n")
+            
+            if user_advice.strip():
+                f.write("=== 用户建议 ===\n")
+                f.write(user_advice)
+                f.write("\n")
+        
+        messages = {
+            "zh": f"建议已保存到: {filename}",
+            "en": f"Advice saved to: {filename}"
+        }
+        return jsonify({"message": messages.get(language, messages["zh"])})
+        
+    except Exception as e:
+        error_messages = {
+            "zh": f"保存建议失败: {str(e)}",
+            "en": f"Save advice failed: {str(e)}"
+        }
+        return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 500
+
+@app.route('/load_advice', methods=['POST'])
+def load_advice():
+    """从文件加载建议"""
+    try:
+        language = request.form.get("language", "zh")
+        
+        if 'file' not in request.files:
+            error_messages = {
+                "zh": "没有选择文件",
+                "en": "No file selected"
+            }
+            return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 400
+        
+        file = request.files['file']
+        if file.filename == '':
+            error_messages = {
+                "zh": "没有选择文件",
+                "en": "No file selected"
+            }
+            return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 400
+        
+        if file and file.filename.endswith('.txt'):
+            content = file.read().decode('utf-8')
+            
+            # 解析文件内容，分离Graph反思建议和用户建议
+            reflect_advice = ""
+            user_advice = ""
+            
+            if "=== Graph反思建议 ===" in content:
+                parts = content.split("=== Graph反思建议 ===")
+                if len(parts) > 1:
+                    remaining = parts[1]
+                    if "=== 用户建议 ===" in remaining:
+                        reflect_advice = remaining.split("=== 用户建议 ===")[0].strip()
+                        user_advice = remaining.split("=== 用户建议 ===")[1].strip()
+                    else:
+                        reflect_advice = remaining.strip()
+            elif "=== 用户建议 ===" in content:
+                parts = content.split("=== 用户建议 ===")
+                if len(parts) > 1:
+                    user_advice = parts[1].strip()
+            
+            return jsonify({
+                "reflect_advice": reflect_advice,
+                "user_advice": user_advice
+            })
+        else:
+            error_messages = {
+                "zh": "请选择TXT文件",
+                "en": "Please select a TXT file"
+            }
+            return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 400
+            
+    except Exception as e:
+        error_messages = {
+            "zh": f"加载建议失败: {str(e)}",
+            "en": f"Load advice failed: {str(e)}"
+        }
+        return jsonify({"error": error_messages.get(language, error_messages["zh"])}), 500
 
 
 if __name__ == '__main__':

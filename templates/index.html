@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LangGraph 提示词管理工具</title>
+    <title>Langraph Generator with Reflection</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -105,21 +105,30 @@
     <div class="main-container">
         <!-- 头部 -->
         <div class="header">
-            <h1><i class="fas fa-robot"></i> LangGraph 提示词管理工具</h1>
-            <p class="mb-0">左侧：提示词管理 | 中间：内容生成 | 右侧：修改意见</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1><i class="fas fa-robot"></i> <span id="header-title">LangGraph 提示词管理工具</span></h1>
+                    <p class="mb-0" id="header-desc">左侧：提示词管理 | 中间：内容生成 | 右侧：修改意见</p>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-light btn-sm" onclick="toggleLanguage()">
+                        <i class="fas fa-globe"></i> <span id="lang-switch">English</span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <div class="row">
             <!-- 左侧板块 - 提示词管理 -->
             <div class="col-md-4">
                 <div class="panel">
-                    <h3><i class="fas fa-edit"></i> 提示词管理</h3>
+                    <h3><i class="fas fa-edit"></i> <span id="prompt-management-title">提示词管理</span></h3>
                     
                     <!-- 按钮组 -->
                     <div class="mb-3">
                         <div class="file-input-wrapper">
                             <button type="button" class="btn btn-secondary btn-custom" onclick="document.getElementById('fileInput').click()">
-                                <i class="fas fa-folder-open"></i> 从文件加载
+                                <i class="fas fa-folder-open"></i> <span id="load-from-file">从文件加载</span>
                             </button>
                             <input type="file" id="fileInput" accept=".json" onchange="loadFromFile()" style="display: none;">
                         </div>
@@ -127,26 +136,26 @@
 
                     <!-- 提示词编辑区域 -->
                     <div class="mb-3">
-                        <label for="generatePrompt" class="form-label">生成节点提示词</label>
+                        <label for="generatePrompt" class="form-label" id="generate-prompt-label">生成节点提示词</label>
                         <textarea class="form-control textarea-medium" id="generatePrompt" rows="4" 
-                                  placeholder="输入生成节点的提示词...">{{ prompts.generation_prompt }}</textarea>
+                                  placeholder="" data-placeholder-zh="输入生成节点的提示词..." data-placeholder-en="Enter generation node prompt...">{{ prompts.generation_prompt }}</textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="reflectionPrompt" class="form-label">反思节点提示词</label>
+                        <label for="reflectionPrompt" class="form-label" id="reflection-prompt-label">反思节点提示词</label>
                         <textarea class="form-control textarea-medium" id="reflectionPrompt" rows="4" 
-                                  placeholder="输入反思节点的提示词...">{{ prompts.reflection_prompt }}</textarea>
+                                  placeholder="" data-placeholder-zh="输入反思节点的提示词..." data-placeholder-en="Enter reflection node prompt...">{{ prompts.reflection_prompt }}</textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="userPrompt" class="form-label">用户提示词</label>
+                        <label for="userPrompt" class="form-label" id="user-prompt-label">用户提示词</label>
                         <textarea class="form-control textarea-small" id="userPrompt" rows="3" 
-                                  placeholder="输入用户提示词...">{{ prompts.user_prompt }}</textarea>
+                                  placeholder="" data-placeholder-zh="输入用户提示词..." data-placeholder-en="Enter user prompt...">{{ prompts.user_prompt }}</textarea>
                     </div>
 
                     <!-- 保存按钮 -->
                     <button type="button" class="btn btn-success btn-custom w-100" onclick="savePrompts()">
-                        <i class="fas fa-save"></i> 保存提示词
+                        <i class="fas fa-save"></i> <span id="save-prompts">保存提示词</span>
                     </button>
                     
                     <!-- 状态消息 -->
@@ -157,20 +166,39 @@
             <!-- 中间板块 - 内容生成 -->
             <div class="col-md-4">
                 <div class="panel">
-                    <h3><i class="fas fa-magic"></i> 内容生成</h3>
+                    <h3><i class="fas fa-magic"></i> <span id="content-generation-title">内容生成</span></h3>
                     
                     <!-- 生成按钮 -->
                     <div class="mb-3">
                         <button type="button" class="btn btn-primary btn-custom w-100" onclick="generateContent()">
-                            <i class="fas fa-play"></i> 生成内容
+                            <i class="fas fa-play"></i> <span id="generate-content">生成内容</span>
                         </button>
                     </div>
 
                     <!-- 生成内容显示 -->
                     <div class="mb-3">
-                        <label for="generatedContent" class="form-label">生成的内容</label>
+                        <label for="generatedContent" class="form-label" id="generated-content-label">生成的内容</label>
                         <textarea class="form-control textarea-large" id="generatedContent" rows="15" 
-                                  placeholder="生成的内容将显示在这里..." readonly></textarea>
+                                  placeholder="" data-placeholder-zh="生成的内容将显示在这里..." data-placeholder-en="Generated content will appear here..." readonly></textarea>
+                    </div>
+
+                    <!-- 保存和加载按钮 -->
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-success btn-custom w-100" onclick="saveContent()">
+                                    <i class="fas fa-save"></i> <span id="save-content">保存内容</span>
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <div class="file-input-wrapper">
+                                    <button type="button" class="btn btn-info btn-custom w-100" onclick="document.getElementById('contentFileInput').click()">
+                                        <i class="fas fa-folder-open"></i> <span id="load-content">加载内容</span>
+                                    </button>
+                                    <input type="file" id="contentFileInput" accept=".txt" onchange="loadContent()" style="display: none;">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- 状态消息 -->
@@ -181,18 +209,44 @@
             <!-- 右侧板块 - 修改意见 -->
             <div class="col-md-4">
                 <div class="panel">
-                    <h3><i class="fas fa-comments"></i> 修改意见</h3>
+                    <h3><i class="fas fa-comments"></i> <span id="feedback-title">修改意见</span></h3>
                     
-                    <!-- 反馈输入 -->
+                    <!-- Graph生成的反思建议 -->
                     <div class="mb-3">
-                        <label for="feedbackInput" class="form-label">请输入您的修改意见</label>
-                        <textarea class="form-control textarea-large" id="feedbackInput" rows="8" 
-                                  placeholder="请在此输入对生成内容的修改建议..."></textarea>
+                        <label for="reflectAdviceInput" class="form-label" id="reflect-advice-label">Graph反思建议</label>
+                        <textarea class="form-control textarea-medium" id="reflectAdviceInput" rows="6" 
+                                  placeholder="" data-placeholder-zh="Graph生成的反思建议将显示在这里..." data-placeholder-en="Graph-generated reflection advice will appear here..." readonly></textarea>
+                    </div>
+                    
+                    <!-- 用户反馈输入 -->
+                    <div class="mb-3">
+                        <label for="feedbackInput" class="form-label" id="feedback-label">请输入您的修改意见</label>
+                        <textarea class="form-control textarea-medium" id="feedbackInput" rows="6" 
+                                  placeholder="" data-placeholder-zh="请在此输入对生成内容的修改建议..." data-placeholder-en="Please enter your suggestions for improving the generated content..."></textarea>
+                    </div>
+                    
+                    <!-- 保存和加载建议按钮 -->
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-warning btn-custom w-100" onclick="saveAdvice()">
+                                    <i class="fas fa-save"></i> <span id="save-advice">保存建议</span>
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <div class="file-input-wrapper">
+                                    <button type="button" class="btn btn-info btn-custom w-100" onclick="document.getElementById('adviceFileInput').click()">
+                                        <i class="fas fa-folder-open"></i> <span id="load-advice">加载建议</span>
+                                    </button>
+                                    <input type="file" id="adviceFileInput" accept=".txt" onchange="loadAdvice()" style="display: none;">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle"></i>
-                        修改意见将在下次生成内容时使用，无需单独保存。可以添加到用户提示词一起保存。
+                        <span id="feedback-info">修改意见将在下次生成内容时使用，无需单独保存。可以添加到用户提示词一起保存。</span>
                     </div>
                 </div>
             </div>
@@ -202,6 +256,86 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // 语言切换功能
+        let currentLanguage = 'zh'; // 默认中文
+        
+        const translations = {
+            zh: {
+                'header-title': 'Langraph 多轮反思 自动文本生成工具',
+                'header-desc': '左侧：提示词管理 | 中间：内容生成 | 右侧：修改意见',
+                'lang-switch': 'English',
+                'prompt-management-title': '提示词管理',
+                'load-from-file': '从文件加载',
+                'generate-prompt-label': '生成节点提示词',
+                'reflection-prompt-label': '反思节点提示词',
+                'user-prompt-label': '用户提示词',
+                'save-prompts': '保存提示词',
+                'content-generation-title': '内容生成',
+                'generate-content': '生成内容',
+                'generated-content-label': '生成的内容',
+                'save-content': '保存内容',
+                'load-content': '加载内容',
+                'feedback-title': '修改意见',
+                'reflect-advice-label': 'Graph反思建议',
+                'feedback-label': '请输入您的修改意见',
+                'save-advice': '保存建议',
+                'load-advice': '加载建议',
+                'feedback-info': '修改意见将在下次生成内容时使用，无需单独保存。可以添加到用户提示词一起保存。'
+            },
+            en: {
+                'header-title': 'Langraph Generator with Reflection',
+                'header-desc': 'Left: Prompt Management | Middle: Content Generation | Right: Feedback',
+                'lang-switch': '中文',
+                'prompt-management-title': 'Prompt Management',
+                'load-from-file': 'Load from File',
+                'generate-prompt-label': 'Generation Node Prompt',
+                'reflection-prompt-label': 'Reflection Node Prompt',
+                'user-prompt-label': 'User Prompt',
+                'save-prompts': 'Save Prompts',
+                'content-generation-title': 'Content Generation',
+                'generate-content': 'Generate Content',
+                'generated-content-label': 'Generated Content',
+                'save-content': 'Save Content',
+                'load-content': 'Load Content',
+                'feedback-title': 'Feedback',
+                'reflect-advice-label': 'Graph Reflection Advice',
+                'feedback-label': 'Please enter your feedback',
+                'save-advice': 'Save Advice',
+                'load-advice': 'Load Advice',
+                'feedback-info': 'Feedback will be used in the next content generation. No need to save separately. Can be added to user prompt for saving.'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            const texts = translations[currentLanguage];
+            
+            // 更新所有文本
+            for (const [id, text] of Object.entries(texts)) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = text;
+                }
+            }
+            
+            // 更新placeholder
+            const placeholders = document.querySelectorAll('[data-placeholder-zh][data-placeholder-en]');
+            placeholders.forEach(element => {
+                const placeholder = currentLanguage === 'zh' ? 
+                    element.getAttribute('data-placeholder-zh') : 
+                    element.getAttribute('data-placeholder-en');
+                element.placeholder = placeholder;
+            });
+        }
+
+        // 页面加载完成后初始化语言
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLanguage();
+        });
 
         // 从文件加载提示词
         function loadFromFile() {
@@ -238,7 +372,8 @@
             const data = {
                 generation_prompt: document.getElementById('generatePrompt').value,
                 reflection_prompt: document.getElementById('reflectionPrompt').value,
-                user_prompt: document.getElementById('userPrompt').value
+                user_prompt: document.getElementById('userPrompt').value,
+                language: currentLanguage
             };
             
             fetch('/save_prompts', {
@@ -284,7 +419,15 @@
                     showStatus('generateStatus', data.error, 'error');
                 } else {
                     document.getElementById('generatedContent').value = data.content;
-                    showStatus('generateStatus', '内容生成成功', 'success');
+                    // 显示反思建议
+                    if (data.reflect_advice) {
+                        document.getElementById('reflectAdviceInput').value = data.reflect_advice;
+                    }
+                    const messages = {
+                        zh: '内容生成成功',
+                        en: 'Content generated successfully'
+                    };
+                    showStatus('generateStatus', messages[currentLanguage], 'success');
                 }
             })
             .catch(error => {
@@ -292,6 +435,160 @@
             });
         }
 
+        // 保存内容
+        function saveContent() {
+            const content = document.getElementById('generatedContent').value;
+            
+            if (!content.trim()) {
+                const messages = {
+                    zh: '没有内容可保存',
+                    en: 'No content to save'
+                };
+                showStatus('generateStatus', messages[currentLanguage], 'error');
+                return;
+            }
+            
+            fetch('/save_content', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({content: content, language: currentLanguage})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showStatus('generateStatus', data.error, 'error');
+                } else {
+                    showStatus('generateStatus', data.message, 'success');
+                }
+            })
+            .catch(error => {
+                showStatus('generateStatus', '保存失败: ' + error, 'error');
+            });
+        }
+
+        // 加载内容
+        function loadContent() {
+            const fileInput = document.getElementById('contentFileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) return;
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('language', currentLanguage);
+            
+            fetch('/load_content', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showStatus('generateStatus', data.error, 'error');
+                } else {
+                    document.getElementById('generatedContent').value = data.content;
+                    const messages = {
+                        zh: '内容加载成功',
+                        en: 'Content loaded successfully'
+                    };
+                    showStatus('generateStatus', messages[currentLanguage], 'success');
+                }
+            })
+            .catch(error => {
+                const messages = {
+                    zh: '加载失败: ' + error,
+                    en: 'Load failed: ' + error
+                };
+                showStatus('generateStatus', messages[currentLanguage], 'error');
+            });
+        }
+
+        // 保存建议
+        function saveAdvice() {
+            const reflectAdvice = document.getElementById('reflectAdviceInput').value;
+            const userAdvice = document.getElementById('feedbackInput').value;
+            
+            if (!reflectAdvice.trim() && !userAdvice.trim()) {
+                const messages = {
+                    zh: '没有建议可保存',
+                    en: 'No advice to save'
+                };
+                showStatus('generateStatus', messages[currentLanguage], 'error');
+                return;
+            }
+            
+            fetch('/save_advice', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    reflect_advice: reflectAdvice,
+                    user_advice: userAdvice,
+                    language: currentLanguage
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showStatus('generateStatus', data.error, 'error');
+                } else {
+                    showStatus('generateStatus', data.message, 'success');
+                }
+            })
+            .catch(error => {
+                const messages = {
+                    zh: '保存失败: ' + error,
+                    en: 'Save failed: ' + error
+                };
+                showStatus('generateStatus', messages[currentLanguage], 'error');
+            });
+        }
+
+        // 加载建议
+        function loadAdvice() {
+            const fileInput = document.getElementById('adviceFileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) return;
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('language', currentLanguage);
+            
+            fetch('/load_advice', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showStatus('generateStatus', data.error, 'error');
+                } else {
+                    // 分别设置Graph反思建议和用户建议
+                    if (data.reflect_advice) {
+                        document.getElementById('reflectAdviceInput').value = data.reflect_advice;
+                    }
+                    if (data.user_advice) {
+                        document.getElementById('feedbackInput').value = data.user_advice;
+                    }
+                    const messages = {
+                        zh: '建议加载成功',
+                        en: 'Advice loaded successfully'
+                    };
+                    showStatus('generateStatus', messages[currentLanguage], 'success');
+                }
+            })
+            .catch(error => {
+                const messages = {
+                    zh: '加载失败: ' + error,
+                    en: 'Load failed: ' + error
+                };
+                showStatus('generateStatus', messages[currentLanguage], 'error');
+            });
+        }
 
         // 显示状态消息
         function showStatus(elementId, message, type) {
