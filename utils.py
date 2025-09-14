@@ -4,7 +4,7 @@ from typing import Optional, Tuple, List
 import os 
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
-
+from langchain_deepseek import ChatDeepSeek
 # Load environment variables from .env file
 load_dotenv()
 
@@ -87,6 +87,15 @@ def openai_gpt():
     logger.info(f"LLM Initiating openai_gpt model")
     return llm
 
+def deepseek():
+    llm = ChatDeepSeek(
+        model="deepseek-chat",
+        api_key=os.environ["DEEPSEEK_API_KEY"],
+    )
+    logger.info(f"LLM Initiating deepseek model")
+    return llm
+
+
 def aws_claude():
     llm = ChatBedrockConverse(
         model=os.environ["AWS_MODEL"],
@@ -105,7 +114,8 @@ def init_generation_model():
     #llm = ollama_local_qwen3()
     #llm = ollama_local_llama4("llama4:128x17b")
     #llm = ollama_local_deepseek_tool()
-    llm = ollama_local('gpt-oss:20b')
+    #llm = ollama_local('gpt-oss:20b')
+    llm = deepseek()
     #llm = openai_gpt()
     #llm = aws_claude()
     #llm = gemini_openai()
@@ -119,7 +129,8 @@ def init_reflection_model():
     #llm = ollama_local_qwen3()
     #llm = ollama_local_llama4("llama4:128x17b")
     #llm = ollama_local_deepseek_tool()
-    llm = ollama_local('gpt-oss:20b')
+    #llm = ollama_local('gpt-oss:20b')
+    llm = deepseek()
     #llm = openai_gpt()
     #llm = aws_claude()
     #llm = gemini_openai()

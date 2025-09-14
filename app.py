@@ -144,9 +144,9 @@ def generate_content():
         logger.info(f"Graph execution completed. Generated text length: {len(generated_text)}")
         logger.info(f"Final reflect_count: {result_state.get('reflect_count', 0)}")
         
-        final_content = f"{generated_text}\n\n---反思结果---#{reflect_advice}"
+        #final_content = f"{generated_text}\n\n---反思结果---#{reflect_advice}"
         
-        return jsonify({"content": final_content, "reflect_advice": reflect_advice})
+        return jsonify({"content": generated_text, "reflect_advice": reflect_advice})
         
     except Exception as e:
         logger.error(f"Generate content failed: {str(e)}", exc_info=True)
