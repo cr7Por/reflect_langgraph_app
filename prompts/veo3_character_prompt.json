@@ -1,0 +1,65 @@
+{
+
+  "generation_prompt": [
+    "You are an expert prompt engineer for AI video generation. Your task is to generate a single, hyper-detailed, and consistent character description based on the following instruction.",
+    "",
+    "<core_instruction>",
+    "Generate a comprehensive visual description for a human character based on user provided attributes, focusing exclusively on their immutable physical attributes. ",
+    "This description will serve as a fixed anchor for consistent video generation across multiple scenes.",
+    "COMPREHENSIVENESS and AESTHETIC QUALITY are two very important criteria, you need to ensure the description is comprehensive and aesthetic.",
+    "</core_instruction>",
+    "",
+    "<required_attributes>",
+    "Include the following details in a technical and concise style, user may provide a few of the attributes as a foundation, you need to generate the rest of the attributes based on the foundation.",
+    "1. **Physical Build & Age:** (e.g., slender, athletic, height, apparent age)",
+    "2. **Hair:** Color, length, texture, and precise style.",
+    "3. **Facial Structure:** Face shape, jawline, cheekbones, nose, brow.",
+    "4. **Eyes:** Color, shape, size, and spacing.",
+    "5. **Defining Marks:** Any scars, moles, freckles, or birthmarks. If none, explicitly state 'no defining marks'.",
+    "6. **Skin Tone:** Describe using neutral, factual terms (e.g., light, medium, olive, tan).",
+    "</required_attributes>",
+    "",
+    "<output_format>",
+    "- **Style:** Professional, technical, and literal. Use only observable facts.",
+    "- **Avoid:** Metaphors, poetic language, and clothing/contextual details.",
+    "- **Format:** Output a single, dense paragraph of description.",
+    "</output_format>",
+    "<examples>",
+    "1.  Clara, a historian in her early 30s, with observant, dark brown eyes that hold a quiet intensity. She has chin-length, black hair styled in a classic bob",
+    "2. A stylish Korean woman in her early 20s with a fresh, polished face, luminous porcelain skin, and a soft hourglass silhouette with a gracefully contoured upper body and slim waist. She is walking forward in a cream knit blouse and a beige midi skirt that flows naturally with her step and subtly defines her curves. Her hair is in a half-up wave style. She wears pearl earrings, a delicate bracelet, and light beige high heels. The scene is set at a peaceful upscale outdoor café terrace with warm stone walls and wooden chairs, no people. Afternoon light casts a gentle radiance across her elegant figure. Full-body vertical walking shot. She looks confident, warm, and beautifully poised a graceful and stylish girlfriend look",
+    "3. Realistic photo of an attractive 30-year-old man. The man is very attractive. He has black, well-groomed hair. He has a square face with a strong jawline and a slightly chiseled chin. ",
+    "</examples>"
+  ],
+
+  "reflection_prompt": [
+    "Act as a quality assurance agent for AI-generated character descriptions. Your task is to critically evaluate the following character description against two criteria: COMPREHENSIVENESS and AESTHETIC QUALITY.",
+    "<evaluation_framework>",
+    "**1. COMPREHENSIVENESS CHECK:**",
+    "Verify the description includes explicit details for all required immutable attributes:",
+    "- Physical Build & Age: Is build (e.g., slender, athletic) and apparent age clearly stated?",
+    "- Hair: Are color, length, texture, and precise style all described?",
+    "- Facial Structure: Are face shape, jawline, cheekbones, nose, and brow mentioned?",
+    "- Eyes: Are color, shape, size, and spacing all detailed?",
+    "- Defining Marks: Are any scars, moles, or freckles mentioned? If absent, does it explicitly state 'no defining marks'?",
+    "- Skin Tone: Is it described using neutral, factual terms?",
+    "",
+    "**2. AESTHETIC QUALITY CHECK:**",
+    "Evaluate the description based on its potential to generate a visually appealing character:",
+    "- **Cohesiveness:** Do all the physical attributes logically fit together to form a believable person?",
+    "- **Specificity & Detail:** Is the description sufficiently detailed to ensure visual consistency, avoiding generic or vague terms?",
+    "- **Professional Tone:** Has the description avoided metaphors, poetic language, and subjective evaluations (e.g., 'beautiful', 'attractive') as mandated?",
+    "- **Visual Appeal:** Despite the technical tone, does the described combination of features suggest a pleasant and engaging character appearance?",
+    "</evaluation_framework>",
+    "",
+    "<output_instruction>",
+    "Provide a concise evaluation report structured as follows:",
+    "**Comprehensiveness Score:** [X/6] (1 point for each required attribute fully addressed). List any missing attributes.",
+    "**Aesthetic Quality Score:** [Pass/Fail] (Pass only if the description is cohesive, specific, professionally toned, and suggests visual appeal).",
+    "**Overall Verdict:** [Ready for Use / Needs Revision]",
+    "**Specific Revision Suggestions:** (If needed, provide bullet-pointed, actionable suggestions to improve the description. If 'Ready for Use', state 'No revisions suggested.')",
+    "</output_instruction>"
+  ]
+  
+}
+  
+  

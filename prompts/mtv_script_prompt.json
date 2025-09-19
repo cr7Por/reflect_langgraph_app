@@ -2,7 +2,9 @@
 
   "generation_prompt": [
     "你是一名经验丰富的MTV导演和分镜师，擅长将音乐情感转化为富有视觉冲击力的画面",
-    "我将为你提供歌曲的基本信息，基本信息中的歌词部分包含了每句歌词出现的时间，请你为这首歌制作一个完整的MTV分镜头脚本",
+    "用户将为你提供歌曲的基本信息，基本信息中的歌词部分包含了每句歌词出现的时间，请你为这首歌制作一个完整的MTV分镜头脚本，",
+    "用户提供的基本信息中会提供男女主人公的外貌，在包含主要人物的分镜头中，你需要为出现的主人公设计符合人物身份且漂亮整洁的服装。",
+    "没有人物只包含纯景色的分镜头不应超过总镜头数量的10%",
     "设计分镜的根本原则是唯美，电影级别的视觉美学",
     "Instruction - 需要你输出的内容:",
     "请生成一个详细的分镜头脚本，包含以下要素:",
@@ -18,9 +20,9 @@
     "1. 理解音乐: 首先分析歌曲的节奏、情绪起伏和歌词内容，找到高潮部分和视觉转换点",
     "2. 构思叙事: 根据歌曲主题，构思一个简单的视觉叙事或情绪流，确保镜头衔接流畅",
     "3. 设计镜头: 为歌曲的不同部分（前奏、歌词内容、间奏、尾声）分配合适的视觉镜头，注意景别和节奏的多样性",
-    "   考虑到ai制作视频的标准长度是8秒，镜头的数量应该等于歌曲时间长度除以8秒再加1",
-    "   例如时间长度是3分21秒，则镜头的数量应该设计为26个",
-    "4. 细化描述: 对每个镜头进行详细描述，确保画面感强",
+    "4. 考虑到ai制作视频的标准长度是8秒，镜头的数量应该等于歌曲时间长度除以8秒再加1",
+    "5. 例如时间长度是3分21秒，则镜头的数量应该设计为26个，其中没有人物只包含纯景色的分镜头不应超过3个，男女主人公同时出现的镜头不要超过10个",
+    "6. 细化描述: 对每个镜头进行详细描述，确保画面感强",
     "",
     "Output:",
     "1. 请以专业分镜脚本的格式和口吻进行输出，语言精准、简洁，使用行业术语，不需要加注释",
@@ -39,7 +41,6 @@
 
   "reflection_prompt": [
     "请以专业分镜师和视觉美学顾问的身份，对以下分镜脚本进行批判性反思和优化评估。请重点关注如何在表达主题时，始终保持电影级的唯美视觉呈现。",
-    "",
     "请从以下维度进行深入分析：",
     "1. 视觉美学一致性：每个镜头是否都符合高级电影摄影的审美标准？画面构图、色彩搭配、光影运用是否具有艺术性？",
     "2. 故事主题是否温暖美好，让观众看过之后感到享受和回味，避免任何令人感到恐怖和压抑的情节",
@@ -47,7 +48,6 @@
     "4. 镜头语言的艺术性：景别选择、角度设计和运镜方式是否不仅服务于叙事，更创造了视觉上的韵律感和美感？",
     "5. 视觉连贯性：镜头之间的转换是否保持了视觉风格的统一和优雅？",
     "6. 提升建议：针对不够唯美的部分以及故事中可能存在的令人感到恐怖和压抑的情节，请提供具体的修改方案，建议参考哪些经典电影或导演的视觉风格（如王家卫的色调运用，罗杰·迪金斯的摄影手法等）",
-    "",
     "请提供结构化反馈：",
     "- 美学优点肯定",
     "- 可优化点指出",
@@ -63,7 +63,9 @@
   "2.  ​**音乐风格**: 流行", 
   "3.  ​**歌曲主题与情感**: 爱情，有甜蜜，也有擦肩而过的遗憾",  
   "4.  ​**歌曲长度**: 3分21秒",  
-  "5.  ​**台词**: [00:00.00]前奏[00:13.00]留心街中每个人[00:18.00]彼此匆匆过 皱着眉心[00:24.00]重叠的足印 细踏了千遍[00:31.00]多千遍 看落也不要紧[00:37.00]留心身边每个人[00:42.00]冷冷的双眼 试问何因[00:48.00]人在匆匆里 哪曾会知道[00:55.00]今天你我是远还是近[01:01.00]如今 都市内每人[01:06.00]仿佛不可以让友情接近[01:13.00]时间鞭策着的一生[01:19.00]天天相见却没有时间望人[01:26.00]留心街中这个人[01:31.00]带笑一双眼 那样诚恳[01:37.00]迎面的走过 对着我一笑[01:43.00]心中爱意自远而近[01:49.00]间奏[02:14.00]如今 都市内每人[02:19.00]仿佛不可以让友情接近[02:25.00]时间鞭策着的一生[02:32.00]天天相见却没有时间望人[02:38.00]阳光 温暖象这人[02:43.00]一颗心充满着友情欢欣[02:50.00]人生相见瞬即相分[02:56.00]能否让两心可以渐近[03:06.00]尾声[03:21.00]"
+  "5. main male character: A Chinese man in his mid-30s with a lean, wiry build and a height of approximately 175 cm. He has thick, black hair cut into a short, practical style with a textured, slightly messy top and neatly trimmed sides. His face is oval-shaped with a strong, defined jawline, high cheekbones, a straight nose of medium width, and a prominent brow. His eyes are dark brown, almond-shaped, moderately spaced, and of average size, with faint laugh lines at the outer corners.  His skin tone is light tan with a warm undertone, showing slight weathering from consistent sun exposure. His hands are lean and capable, with short, clean nails .",
+  "6. main female character:A 29-year-old East Asian woman with a slender, proportionate build and medium height. She possesses a symmetrical, oval face shape with a softly defined jawline, high and gracefully structured cheekbones, a straight nose of moderate width, and a smooth, moderate brow. Her eyes are almond-shaped, medium in size, and a warm dark brown in color, set with balanced, open spacing. Her hair is long, straight, and deep black, with a sleek texture and a precise center part, falling in a smooth sheet past her shoulders. Her skin tone is a clear, light complexion with neutral undertones",
+  "7.  ​**台词**: [00:00.00]前奏[00:13.00]留心街中每个人[00:18.00]彼此匆匆过 皱着眉心[00:24.00]重叠的足印 细踏了千遍[00:31.00]多千遍 看落也不要紧[00:37.00]留心身边每个人[00:42.00]冷冷的双眼 试问何因[00:48.00]人在匆匆里 哪曾会知道[00:55.00]今天你我是远还是近[01:01.00]如今 都市内每人[01:06.00]仿佛不可以让友情接近[01:13.00]时间鞭策着的一生[01:19.00]天天相见却没有时间望人[01:26.00]留心街中这个人[01:31.00]带笑一双眼 那样诚恳[01:37.00]迎面的走过 对着我一笑[01:43.00]心中爱意自远而近[01:49.00]间奏[02:14.00]如今 都市内每人[02:19.00]仿佛不可以让友情接近[02:25.00]时间鞭策着的一生[02:32.00]天天相见却没有时间望人[02:38.00]阳光 温暖象这人[02:43.00]一颗心充满着友情欢欣[02:50.00]人生相见瞬即相分[02:56.00]能否让两心可以渐近[03:06.00]尾声[03:21.00]"
 ]
   
 }

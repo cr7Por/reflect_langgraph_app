@@ -89,7 +89,7 @@ def openai_gpt():
 
 def deepseek():
     llm = ChatDeepSeek(
-        model="deepseek-chat",
+        model="deepseek-reasoner",
         api_key=os.environ["DEEPSEEK_API_KEY"],
     )
     logger.info(f"LLM Initiating deepseek model")
@@ -155,7 +155,7 @@ def convert_to_string_list(long_string):
     return [line.rstrip('\n') for line in lines]
 
 if __name__ == "__main__":
-    llm = init_model()
+    llm = init_generation_model()
     print(llm.invoke("你好"))
 
     
