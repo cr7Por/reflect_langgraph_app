@@ -143,6 +143,32 @@ def generate_content():
         
         logger.info(f"Graph execution completed. Generated text length: {len(generated_text)}")
         logger.info(f"Final reflect_count: {result_state.get('reflect_count', 0)}")
+
+        # INSERT_YOUR_CODE
+        import json
+
+        def save_json_to_excel(json_data, excel_filename):
+            import pandas as pd
+            # 只处理字典或包含"sections"的结构
+            if isinstance(json_data, dict) and "sections" in json_data:
+                df = pd.DataFrame(json_data["sections"])
+            elif isinstance(json_data, list):
+                df = pd.DataFrame(json_data)
+            else:
+                df = pd.DataFrame([json_data])
+            df.to_excel(excel_filename, index=False)
+
+        # 检查generated_text是否为json格式
+        try:
+            parsed_json = json.loads(generated_text)
+            # 生成文件名（包含时间戳）
+            import datetime
+            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            excel_filename = f"generated_content_{timestamp}.xlsx"
+            save_json_to_excel(parsed_json, excel_filename)
+            logger.info(f"Generated content saved to Excel: {excel_filename}")
+        except Exception as e:
+            logger.info(f"Generated text is not valid JSON or failed to save as Excel: {e}")
         
         #final_content = f"{generated_text}\n\n---反思结果---#{reflect_advice}"
         

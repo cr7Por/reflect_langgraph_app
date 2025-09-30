@@ -49,6 +49,8 @@ class ExcelBatchProcessor:
         self.error_count = 0
         self.generation_prompt = ""
         self.reflection_prompt = ""
+        self.user_feedback = ""
+        self.user_prompt = ""
     
     def load_prompts(self) -> bool:
         """
@@ -94,6 +96,11 @@ class ExcelBatchProcessor:
                 self.reflection_prompt = '\n'.join(prompt_data['reflection_prompt'])
             else:
                 self.reflection_prompt = str(prompt_data['reflection_prompt'])
+
+            if isinstance(prompt_data['user_feedback'], list):
+                self.user_feedback = '\n'.join(prompt_data['user_feedback'])
+            else:
+                self.user_feedback = str(prompt_data['user_feedback'])
             
             
             logger.info(f"成功加载prompt文件")
@@ -165,7 +172,7 @@ class ExcelBatchProcessor:
                 "generation_prompt": self.generation_prompt,
                 "reflection_prompt": self.reflection_prompt,
                 "user_prompt": str(row['user_prompt']) if pd.notna(row['user_prompt']) else "",
-                "user_advice": str(row['user_feedback']) if pd.notna(row['user_feedback']) else "",
+                "user_advice": str(row['user_feedback']) + self.user_feedback if pd.notna(row['user_feedback']) else self.user_feedback,
                 "content": str(row['generation_content']) if pd.notna(row['generation_content']) else "",
                 "reflecton_advice": str(row['reflection_advice']) if pd.notna(row['reflection_advice']) else "",
                 "reflect_count": 0

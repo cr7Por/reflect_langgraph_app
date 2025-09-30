@@ -58,6 +58,8 @@
 "4. ​Technical Compatibility: Is the prompt structured for Veo3's best performance?",
 "   - Verify: Appropriate length (10-25 words optimal), clear sentence structure, Veo3-friendly terminology,",
 "   - Technical specifications (4K, high detail, slow motion) if needed",
+"5. ​Consistency: Is the prompt consistent with the user's input?",
+"   - Check for: Consistency with the user's input, including the characters' physical build and age, hair color and style, facial structure, eye color and shape, any defining marks",
 "## Improvement Suggestions ##",
 "If the prompt lacks in any area, provide specific recommendations:",
 "- Add cinematic terminology: 'cinematic lighting', 'shallow depth of field', 'film grain effect'",
@@ -71,7 +73,19 @@
 "- AREAS FOR IMPROVEMENT: [Specific elements to enhance]",
 "- OPTIMIZED PROMPT: [Rewritten version incorporating suggestions]",
 "Focus specifically on visual beauty and Veo3 compatibility in your evaluation."
-]
+],
+
+"user_prompt": [
+      "male main character: A 32-year-old Korean male with a lean, toned build and medium height, possessing thick, straight black hair cut into a short, ",
+      "textured crop that is often slightly tousled from the habit of running a hand through it during work, a strong oval face with a defined jawline, ",
+      "high cheekbones, a straight nose of moderate width, a prominent brow, and deeply set, almond-shaped dark brown eyes with a direct gaze, along with warm,",
+      " light tan skin showing faint weathering around the eyes from regular time outdoors and no defining marks; ",
+      "female main character: a 28-year-old Korean female with a slender, graceful build, average height, and a naturally upright, composed posture, ",
+      "featuring long, straight black hair kept neatly parted centrally and falling just past the shoulders in a smooth, sharp line with a healthy sheen, ",
+      "a soft oval face with a delicate jawline, subtly high cheekbones, a small straight nose, a smooth brow, and moderately large, ",
+      "round warm brown eyes set evenly apart that often hold a patient, focused expression, complemented by clear, light porcelain skin with no defining marks"
+      
+  ]
   
 }
   

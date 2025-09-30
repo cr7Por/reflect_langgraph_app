@@ -58,7 +58,13 @@
     "**Overall Verdict:** [Ready for Use / Needs Revision]",
     "**Specific Revision Suggestions:** (If needed, provide bullet-pointed, actionable suggestions to improve the description. If 'Ready for Use', state 'No revisions suggested.')",
     "</output_instruction>"
+  ],
+
+  "user_prompt": [
+      "1. 男主角：32岁，韩国人，小店店主，卖水果和鲜花",
+      "2. 女主角：28岁，韩国人，白领，文员"
   ]
+
   
 }
   
