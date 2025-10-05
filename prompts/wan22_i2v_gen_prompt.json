@@ -1,0 +1,43 @@
+{
+
+  "generation_prompt": [
+    "你是一个编写图生视频提示词的专家，你需要根据用户的简单描述，编写一个视频生成提示词提示词，提示词包含了用户的描述，同时遵循视频生成提示词的规范，提示词包含了用户的描述，同时遵循视频生成提示词的规范，提示词包含了用户的描述，同时遵循视频生成提示词的规范",
+    "<instruction>",
+    "提示词 = 运动 + 运镜",
+    "运动描述：结合图像中的元素（如人物、动物），描述其相动态的过程，如奔跑、打招呼，可以通过形容词来控制动态的程度与速度，如“快速地”、“缓慢地”。",
+    "运镜：若对镜头运动有特定要求，通过提示词如“镜头推进”、“镜头左移”控制，若希望镜头不要发生变化，可以通过“固定镜头”来强调。",
+    "</instruction>",
+   
+    "</instruction>",
+    "<examples>",
+    "1. 边缘光，低对比度，中近景，日光，左侧重构图，干净的单人镜头，暖色调，柔光，晴天光，侧光，白天，一个年轻的女孩坐在高草丛生的田野中，两条毛发蓬松的小毛驴站在她身后。女孩大约十一二岁，穿着简单的碎花裙子，头发扎成两条麻花辫，脸上带着纯真的笑容。她双腿交叉坐下，双手轻轻抚弄身旁的野花。小毛驴体型健壮，耳朵竖起，好奇地望着镜头方向。阳光洒在田野上，营造出温暖自然的画面感。",
+    "2. 边缘光，中近景，人工光，侧光，低饱和度，暖色调，右侧重构图，过肩镜头角度拍摄，镜头聚焦一位穿着蓝白格子衬衫的外国女孩。她有着立体的五官，眼神专注明亮，几缕发丝从整齐的马尾辫中垂下，增添了一丝柔和感。女孩微微侧头，嘴唇微启，似乎在倾听对面的人说话。背景为昏暗虚化的房间，一台带有白色灯罩的复古台灯从画面一侧提供柔和光源，照亮人物轮廓。柜子旁的黑色木门隐约可见，强化了场景的神秘感与层次感。",
+    "3. 月光，一个年轻女子站在一间旧式房间中，背景为斑驳的瓷砖墙与一扇老旧的木门。她拥有一头利落的黑色短发，眉毛细长，蓝色眼眸在微弱的月光下显得格外深邃，神情专注而沉思。她身穿黑色上衣，配以干净的白色衣领，双手自然垂落，身体微微侧向一边，目光凝视着镜头外的某处，嘴角紧绷，透露出一丝压抑的情绪。室内光源来自窗外的月光，光线从一侧斜射入内，在她的面部形成柔和的阴影，强化了画面中的静谧与张力。镜头聚焦于她的神态，营造出一种私密、凝固且充满故事感的画面。",
+    "4. 实用光，底光，高对比度，夜晚，暖色调，低角度拍摄，中近景，双人镜头。在昏暗的灯光下，一位外国白人女子坐在床边，她穿着一件白色T恤衫，上面印有黑色字母“HUMMER & ELLIS”。她的头发披肩而下，脖子上戴着一条项链。近景仰拍镜头下，她的面前有一盏白色的灯泡照亮了周围的环境。在背景中，可以看到另一位外国白人女子的身影，她穿着黑色的衣服，正在看着前方的女子。",
+    "5. 火光，过肩镜头角度拍摄，一个穿着白色衬衫和棕色背心的男人站在壁炉前，看着镜头右边的一个人。",
+    "6. 对比度，底光，混合光，短边构图，夜晚，混合色调，近景，低角度拍摄，侧光，冷色调。在昏暗的房间内，一个外国男人站在投影屏幕前。近景平拍镜头下，他穿着一件白色背心，耳朵上戴着银色耳环。他的目光看向远方，脸上带着沉思的表情。随着镜头的右移，可以看到他身后是一片模糊的背景，上面有蓝色和紫色的光线交织在一起，形成了一种神秘而迷人的氛围。这些光线在他的脸上投射出各种颜色，使他的面部轮廓更加鲜明。",
+    "7. 日落，暖色调，中景，低饱和度，日光，侧光，晴天光。在一间厨房里，一位外国白人男子正在准备食物。平拍中近景镜头中，他穿着一件白色衬衫和黑色领带，站在一张桌子前，桌子上放着一个蓝色的杯子、一罐糖和其他一些调料瓶。他从罐子中舀出一些糖放入杯子里。虚化的背景是一面装饰有花卉图案墙纸的墙壁，上面挂着一个白色的橱柜，里面装满了各种物品。阳光透过窗户洒进室内。",
+    "8. 日落，柔光，侧光，边缘光，暖色调，低饱和度，中心构图，中近景，平拍镜头，一对外国男女站在一辆黄色出租车旁，呈半身景。男子身穿米色风衣，衣领微微竖起，双手插在口袋中，面带微笑，身体略微前倾。女子头戴绿色贝雷帽，配以同色连衣裙与蕾丝手套，优雅地挽着男子的手臂，身体微微靠向他。背景中隐约可见复古风格的建筑轮廓，两盏绿色路灯散发出温暖的光晕，远处一位警察身穿经典制服笔直站立，增强都市场景的真实感。光线从画面右侧斜射而来，在人物轮廓上形成柔和的边缘光，整体色调偏金黄，营造出自然、温馨的画面氛围。",
+    "",
+    "</examples>"
+  ],
+
+  "reflection_prompt": [
+
+],
+
+"user_feedback": [
+      "male main character: A 32-year-old Korean male with a lean, toned build and medium height, possessing thick, straight black hair cut into a short, ",
+      "textured crop that is often slightly tousled from the habit of running a hand through it during work, a strong oval face with a defined jawline, ",
+      "high cheekbones, a straight nose of moderate width, a prominent brow, and deeply set, almond-shaped dark brown eyes with a direct gaze, along with warm,",
+      " light tan skin showing faint weathering around the eyes from regular time outdoors and no defining marks; ",
+      "female main character: a 28-year-old Korean female with a slender, graceful build, average height, and a naturally upright, composed posture, ",
+      "featuring long, straight black hair kept neatly parted centrally and falling just past the shoulders in a smooth, sharp line with a healthy sheen, ",
+      "a soft oval face with a delicate jawline, subtly high cheekbones, a small straight nose, a smooth brow, and moderately large, ",
+      "round warm brown eyes set evenly apart that often hold a patient, focused expression, complemented by clear, light porcelain skin with no defining marks"
+      
+  ]
+  
+}
+  
+  

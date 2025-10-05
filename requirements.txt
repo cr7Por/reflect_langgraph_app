@@ -5,3 +5,4 @@ langchain-core>=0.1.0
 python-dotenv>=1.0.0
 langchain-deepseek>=0.1.4
 langchain-ollama>=0.1.0
+openpyxl>=3.0.0

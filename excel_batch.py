@@ -97,7 +97,8 @@ class ExcelBatchProcessor:
             else:
                 self.reflection_prompt = str(prompt_data['reflection_prompt'])
 
-            if isinstance(prompt_data['user_feedback'], list):
+            # user feedback for character description, user prompt in excel line for scene description
+            if isinstance(prompt_data['user_feedback'], list): 
                 self.user_feedback = '\n'.join(prompt_data['user_feedback'])
             else:
                 self.user_feedback = str(prompt_data['user_feedback'])
