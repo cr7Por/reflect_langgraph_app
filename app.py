@@ -146,6 +146,7 @@ def generate_content():
 
         # INSERT_YOUR_CODE
         import json
+        import re
 
         def save_json_to_excel(json_data, excel_filename):
             import pandas as pd
@@ -158,17 +159,69 @@ def generate_content():
                 df = pd.DataFrame([json_data])
             df.to_excel(excel_filename, index=False)
 
+        def extract_json_from_text(text):
+            """从文本中提取JSON内容，处理markdown代码块等情况"""
+            # 移除markdown代码块标记
+            text = text.strip()
+            
+            # 尝试移除 ```json 和 ``` 标记
+            if text.startswith('```json'):
+                text = text[7:]  # 移除 ```json
+            elif text.startswith('```'):
+                text = text[3:]  # 移除 ```
+            
+            if text.endswith('```'):
+                text = text[:-3]  # 移除结尾的 ```
+            
+            text = text.strip()
+            
+            # 尝试查找JSON对象或数组
+            # 查找第一个 { 或 [ 和最后一个 } 或 ]
+            start_brace = text.find('{')
+            start_bracket = text.find('[')
+            
+            # 确定起始位置
+            if start_brace == -1 and start_bracket == -1:
+                return text
+            elif start_brace == -1:
+                start_pos = start_bracket
+                end_char = ']'
+            elif start_bracket == -1:
+                start_pos = start_brace
+                end_char = '}'
+            else:
+                start_pos = min(start_brace, start_bracket)
+                end_char = '}' if start_pos == start_brace else ']'
+            
+            # 从后往前查找对应的结束字符
+            end_pos = text.rfind(end_char)
+            
+            if end_pos != -1 and end_pos > start_pos:
+                text = text[start_pos:end_pos+1]
+            
+            return text
+
         # 检查generated_text是否为json格式
         try:
-            parsed_json = json.loads(generated_text)
+            logger.info(f"Generated text preview (first 200 chars): {generated_text[:200]}")
+            
+            # 提取JSON内容
+            cleaned_text = extract_json_from_text(generated_text)
+            logger.info(f"Cleaned text preview (first 200 chars): {cleaned_text[:200]}")
+            
+            parsed_json = json.loads(cleaned_text)
+            
             # 生成文件名（包含时间戳）
             import datetime
             timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
             excel_filename = f"generated_content_{timestamp}.xlsx"
             save_json_to_excel(parsed_json, excel_filename)
             logger.info(f"Generated content saved to Excel: {excel_filename}")
+        except json.JSONDecodeError as e:
+            logger.warning(f"Generated text is not valid JSON: {e}")
+            logger.warning(f"JSON error at position {e.pos}: {generated_text[max(0, e.pos-50):min(len(generated_text), e.pos+50)]}")
         except Exception as e:
-            logger.info(f"Generated text is not valid JSON or failed to save as Excel: {e}")
+            logger.warning(f"Failed to save as Excel: {e}", exc_info=True)
         
         #final_content = f"{generated_text}\n\n---反思结果---#{reflect_advice}"
         
