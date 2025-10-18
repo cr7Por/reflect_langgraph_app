@@ -400,23 +400,23 @@ def save_graph_batch_to_excel(json_file: str, output_file: str = None) -> str:
                     print('change female line:', index)
                     desc_shot = desc_shot.replace('苏晴', '一位28岁的中国女人，身材纤细优雅，身高中等，天生挺拔端庄。她留着一头笔直的乌黑长发，发际线整齐地中分，发尾顺滑利落地垂至肩头，泛着健康的光泽。脸型柔和的椭圆形，下颌线纤细精致，颧骨微微高耸。鼻梁笔直纤巧，眉宇间平滑无痕，两只圆润的暖棕色大眼间距匀称，常透着耐心专注的神情，搭配清透如瓷的浅色肌肤。')
 
-                user_prompt_parts.append(f"镜头描述：{desc_shot}")
+                user_prompt_parts.append(f"{desc_shot}, ")
             
             # 添加景别
             if '景别' in shot:
-                user_prompt_parts.append(f"景别：{shot['景别']}")
+                user_prompt_parts.append(f"{shot['景别']}, ")
             
             # 添加角度
             if '角度' in shot:
-                user_prompt_parts.append(f"角度：{shot['角度']}")
+                user_prompt_parts.append(f"{shot['角度']}, ")
             
             # 添加运镜方式
             if '运镜方式' in shot:
-                user_prompt_parts.append(f"运镜方式：{shot['运镜方式']}")
+                user_prompt_parts.append(f"{shot['运镜方式']}, ")
             
             # 添加备注
             if '备注' in shot:
-                user_prompt_parts.append(f"备注：{shot['备注']}")
+                user_prompt_parts.append(f"{shot['备注']}, ")
             
             # 组合user_prompt
             user_prompt = " ".join(user_prompt_parts)
