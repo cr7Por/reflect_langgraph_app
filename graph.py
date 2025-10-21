@@ -111,8 +111,8 @@ builder.set_entry_point("generation")
 
 def should_continue(state: Graph_State):
     logger.info(f"Should continue check - reflect_count: {state['reflect_count']}")
-    if state["reflect_count"] > 1: # change reflect round setting here
-        logger.info("Reflection count exceeded 3, ending graph execution")
+    if state["reflect_count"] >= 1: # change reflect round setting here
+        logger.info("Reflection count exceeded 1, ending graph execution")
         return END
     logger.info("Continuing to reflection node")
     return "reflect"

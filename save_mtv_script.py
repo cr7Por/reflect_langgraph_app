@@ -509,7 +509,7 @@ if __name__ == "__main__":
     import sys
 
     json_file = "mtv_script_gen.json"
-    output_file = "mtv_graph_batch1018.xlsx"
+    output_file = "mtv_graph_batch1019.xlsx"
 
     result = save_graph_batch_to_excel(json_file, output_file)
     if result:

@@ -392,13 +392,13 @@ def save_graph_batch_to_excel(json_file: str, output_file: str = None) -> str:
             # 添加镜头描述
             if '镜头描述' in shot:
                 desc_shot = shot['镜头描述']
-                if '林远' in desc_shot:
-                    print('change male line:', index)
-                    desc_shot = desc_shot.replace('林远', '一名32岁的中国男人，身材精瘦健硕，中等身高，拥有一头浓密笔直的乌黑短发，纹理短发，因工作时习惯用手拨弄而常略显凌乱。椭圆形脸庞轮廓分明，颌线利落，高耸的颧骨，鼻梁笔直宽度适中，眉骨突出，深陷的杏仁形深褐色眼睛目光直视。肤色温暖浅棕，因常年户外活动，眼周显露细微风化痕迹')
+                # if '林远' in desc_shot:
+                #     print('change male line:', index)
+                #     desc_shot = desc_shot.replace('林远', '一名32岁的中国男人，身材精瘦健硕，中等身高，拥有一头浓密笔直的乌黑短发，纹理短发，因工作时习惯用手拨弄而常略显凌乱。椭圆形脸庞轮廓分明，颌线利落，高耸的颧骨，鼻梁笔直宽度适中，眉骨突出，深陷的杏仁形深褐色眼睛目光直视。肤色温暖浅棕，因常年户外活动，眼周显露细微风化痕迹')
                 
-                if '苏晴' in desc_shot:
-                    print('change female line:', index)
-                    desc_shot = desc_shot.replace('苏晴', '一位28岁的中国女人，身材纤细优雅，身高中等，天生挺拔端庄。她留着一头笔直的乌黑长发，发际线整齐地中分，发尾顺滑利落地垂至肩头，泛着健康的光泽。脸型柔和的椭圆形，下颌线纤细精致，颧骨微微高耸。鼻梁笔直纤巧，眉宇间平滑无痕，两只圆润的暖棕色大眼间距匀称，常透着耐心专注的神情，搭配清透如瓷的浅色肌肤。')
+                # if '苏晴' in desc_shot:
+                #     print('change female line:', index)
+                #     desc_shot = desc_shot.replace('苏晴', '一位28岁的中国女人，身材纤细优雅，身高中等，天生挺拔端庄。她留着一头笔直的乌黑长发，发际线整齐地中分，发尾顺滑利落地垂至肩头，泛着健康的光泽。脸型柔和的椭圆形，下颌线纤细精致，颧骨微微高耸。鼻梁笔直纤巧，眉宇间平滑无痕，两只圆润的暖棕色大眼间距匀称，常透着耐心专注的神情，搭配清透如瓷的浅色肌肤。')
 
                 user_prompt_parts.append(f"{desc_shot}, ")
             
