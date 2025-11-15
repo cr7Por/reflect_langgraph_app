@@ -411,8 +411,8 @@ def save_graph_batch_to_excel(json_file: str, output_file: str = None) -> str:
                 user_prompt_parts.append(f"{shot['角度']}, ")
             
             # 添加运镜方式
-            if '运镜方式' in shot:
-                user_prompt_parts.append(f"{shot['运镜方式']}, ")
+            # if '运镜方式' in shot:
+            #     user_prompt_parts.append(f"{shot['运镜方式']}, ")
             
             # 添加备注
             if '备注' in shot:
@@ -509,7 +509,7 @@ if __name__ == "__main__":
     import sys
 
     json_file = "mtv_script_gen.json"
-    output_file = "mtv_graph_batch1018.xlsx"
+    output_file = "mtv_graph_batch1109.xlsx"
 
     result = save_graph_batch_to_excel(json_file, output_file)
     if result:

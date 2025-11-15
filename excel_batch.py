@@ -77,14 +77,6 @@ class ExcelBatchProcessor:
             if 'reflection_prompt' not in prompt_data:
                 logger.error("JSON文件中缺少 'reflection_prompt' 字段")
                 return False
-
-            # if 'male_character' not in prompt_data:
-            #     logger.error("JSON文件中缺少 'male_character' 字段")
-            #     return False
-            
-            # if 'female_character' not in prompt_data:
-            #     logger.error("JSON文件中缺少 'female_character' 字段")
-            #     return False
             
             # 将列表转换为字符串
             if isinstance(prompt_data['generation_prompt'], list):
@@ -387,7 +379,7 @@ async def main():
     parser.add_argument('-o', '--output', help='输出Excel或CSV文件路径（可选）')
     parser.add_argument('-v', '--verbose', action='store_true', help='详细输出')
 
-    # python excel_batch.py --input_file mtv_graph_batch917.xlsx --prompt_file prompts/veo3_gen_prompt.json -o mtv_graph_batch917_processed.xlsx
+    # python excel_batch.py --input_file mtv_graph_batch1109.xlsx --prompt_file prompts/midjourney_gen_prompt.json -o mtv_audi_midjourney_1109.xlsx
     
     args = parser.parse_args()
     
