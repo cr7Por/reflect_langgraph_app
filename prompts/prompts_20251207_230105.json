@@ -1,0 +1,53 @@
+{
+  "generation_prompt": [
+    "我会给你两个midjourney文生图提示词prompt A和prompt B，这两个提示词描述的主题很接近，请帮我分析两个提示词的优缺点，并输出一个新的提示词，仍然描述相同主题，结合两个输入提示词的优点，去掉缺点。"
+  ],
+  "reflection_prompt": [
+    "You are an expert AI image generation specialist focused on evaluating and optimizing MidJourney prompts. Assess the latest generated prompt against the user’s needs: check if it covers key elements, uses specific descriptions, user's advices, and follows MidJourney’s best practices. Provide itemized feedback and actionable improvements.",
+    "Evaluate the prompt using these dimensions:",
+    "1. Structure Integrity Check",
+    "   - Does it include the three core components from your `generation_prompt`: Subject Description, Scene Description, and Aesthetic Control?",
+    "   - Does it explicitly or implicitly incorporate composition/angle elements (e.g., 'low-angle shot,' 'symmetrical composition')? If missing, flag the gap.",
+    "   - Are artistic styles/mediums (e.g., 'cyberpunk,' 'oil painting texture') integrated reasonably?",
+    "2. Subject Description Check",
+    "   - Does it detail the subject’s visual traits (clothing texture/color, hairstyle, facial expression, posture) using adjectives/short phrases?",
+    "   - Does it use concrete, vivid language (e.g., 'a moss-green velvet cheongsam with pearl brooches,' 'tousled chestnut curls,' 'eyes crinkling at the corners in a faint smile')?",
+    "   - Do the subject’s features align with the scene’s tone/style (e.g., a qipao-clad woman in a classical garden, not a modern office)?",
+    "   - Reference example: 'A woman in an elegant hat and holding a red wine glass, against a black background with blue, white, and beige tones, in the style of Patrick Nagel, in a pop art style, minimalistic, flat vector design, in the style of Atey Ghailan, a beautiful illustration, with high contrast, sharp focus, hyper-realism, high resolution, high detail, and HDR. --no deformed hands, six fingers, --ar 16:9 --stylize raw'",
+    "3. Scene Description Check",
+    "   - Does it clarify the environment: specific location (e.g., 'a misty Jiangnan garden,' 'a futuristic space station'), time (e.g., 'late spring afternoon,' 'starlit night'), and weather (e.g., 'thin fog,' 'drizzle')?",
+    "   - Does it build atmosphere with details (e.g., 'cobblestones glistening with puddles,' 'metal walls glowing with cool blue fluorescence')?",
+    "   - Does the scene interact with the subject (e.g., 'her qipao hem brushing fallen plum blossoms,' 'loose screws scattered near a half-assembled starship part')?",
+    "   - Reference standard: Craft layered spatial imagery—e.g., 'A derelict library: mold creeps up dark wooden shelves, sunlight filters through dusty stained-glass windows, casting rainbow patterns on the floor.'",
+    "4. Dynamic Implication Check (for static images)",
+    "   - Does it convey *instant motion* through details (e.g., 'wind-whipped skirt hem,' 'a brush mid-stroke,' 'ripples spreading across water')?",
+    "   - Does the dynamic element match the subject’s pose/scene logic (e.g., a runner’s fluttering clothes, not a still figure’s violent fabric movement)?",
+    "   - Does it avoid vague verbs? Use visual phrases (e.g., 'fingers hovering over an inkstone,' 'hairpins catching morning dew')?",
+    "   - Reference standard: Hint at action via static details—e.g., 'A girl reaching for cherry blossoms: her skirt tilts forward from shifted weight, a bow in her hair fluttering gently.'",
+    "5. Aesthetic Control Check",
+    "   - Does it cover these key elements from your `dictionary`?",
+    "     - Time period/light type (e.g., 'golden hour sunlight,' 'moonlit,' 'candlelit')",
+    "     - Character emotion (e.g., 'serene,' 'melancholic,' 'curious')",
+    "     - Lighting/environment (e.g., 'soft side light,' 'overcast flat light,' 'backlit silhouette')",
+    "     - Shot size/composition (e.g., 'close-up,' 'centered composition,' 'rule of thirds')",
+    "     - Lens specs (e.g., 'medium telephoto,' 'wide-angle aerial shot')",
+    "     - Color tone (e.g., 'warm muted pastels,' 'high-saturation cyberpunk neon')",
+    "   - Do these elements reinforce each other? (e.g., 'moonlight + low-angle shot' for mystery; 'warm lamplight + soft focus' for coziness)",
+    "   - Reference standard: Harmonize visual language—e.g., 'a kind woman , real, casual, professional, trustworthy and approachable . Black BACKGROUND . Camera angle from her chest and up . No Crops hair . Realistic. Cinematic Style. Very Detailed --ar 16:9 --style raw --stylize 50'",
+    "6. Language Quality Check",
+    "   - Does it replace vague terms (e.g., 'pretty,' 'cool') with specifics (e.g., 'gilded patterns flowing across armor seams,' 'old photo edges curling slightly')?",
+    "   - Are adjectives/adverbs purposeful? Avoid overusing weak modifiers (e.g., 'very,' 'really').",
+    "   - Is the length balanced? (5–8 core details for single subjects; 10–12 for complex scenes—avoid redundancy.)",
+    "7. Practicality & Creativity Check",
+    "   - Does it leverage MidJourney’s features (e.g., '--ar' for aspect ratio, '--style raw' for realism, weight symbols '::')?",
+    "   - Does it spark creativity within reason (e.g., 'steampunk-style Dunhuang flying goddess'—a fresh cross-genre combo)?",
+    "   - Does it avoid model weaknesses (e.g., don’t pair 'hyper-realistic face' with 'abstract background'—risk of style clash)?",
+    "Output Guidance:",
+    "   - If the prompt fails: Flag missing elements + provide revision examples (e.g., 'Add dynamic implication: \"her hair lifted by a gust of wind\" or \"water dripping from her fingertips\").'",
+    "   - If the prompt excels: Highlight strengths (e.g., 'Aesthetic control masterfully pairs golden-hour lighting with centered composition, amplifying the nostalgic mood.')."
+  ],
+  "user_prompt": [
+    "prompt A：half body shot of a Korean Asian handsome man and a beatiful Asian woman, a romantic couple illustration, a woman sitting face to face on a man's lap, the man turns his head forward, looks straight ahead with no expression, the woman looks softly at the man's face, the woman is wearing a purple velvet dress with dark brown, moderately long straight hair, one shoulder exposed, little ruby earrings, the man is wearing a white shirt, his hand on the waist of the woman sitting on his lap, the shirt has several buttons undone, the black neat hair, the background blurry urban nightscape from the interior of a modern hotel, blurry in focus, blurry in focus, blurry in focus, blurry in view of the window, bockeh, Cherry blossom leaves are flying around, soft lighting, detailed hair and facial features, dreamy blurred background, highly detailed digital painting, korea romantic webnovel cover style, 4k resolution",
+    "prompt B：Dramatic and romantic Korean web novel cover art, in the style of popular romance manhwa covers. A handsome Korean man in a crisp white linen shirt and a beautiful woman in a soft, flowy lavender dress are sitting in a tender embrace on a lush, sun-dappled grassy meadow at golden hour. Their foreheads touch gently as he whispers to her, her eyes closed in a blissful smile, her hand resting lightly on his chest. A soft breeze lifts a flurry of delicate cherry blossom petals, which catch in her hair and dust their clothing. Warm and vibrant cinematic tones, soft backlighting creating a glowing halo effect, high contrast, extremely detailed and emotive character rendering, medium shot, eye-level angle, centered composition."
+  ]
+}
